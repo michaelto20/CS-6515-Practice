@@ -24,19 +24,19 @@ namespace _3Chains
                 {
                     Console.WriteLine("Skipping as it's not connect to a chain");
                 }
-                for (int j = 0; j < i; j++)
+                for (int j = i + 1; j < sequence.Length; j++)
                 {
                     Console.WriteLine("j position: " + sequence[j]);
-                    if (sequence[j] - 3 <= sequence[i] && sequence[j] + 3 >= sequence[i])
+                    if (Math.Abs(sequence[j] - sequence[i]) <= 3)
                     {
-                        T[i] = Math.Max(T[i], T[j] + 1);
+                        T[j] = Math.Max((T[j] + T[i]),T[j] + 1);
                     }
                 }
                 Console.WriteLine("sequence:       " + String.Join(',', sequence));
                 Console.WriteLine("sequence count: " + String.Join(',', T));
             }
 
-            return T[sequence.Length];
+            return T[sequence.Length - 1];
         }
     }
 
