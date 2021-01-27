@@ -16,7 +16,11 @@ namespace CountThree
         }
 
 
-
+        /// <summary>
+        /// This way does not work... just merging for future ref. 
+        /// </summary>
+        /// <param name="A"></param>
+        /// <returns></returns>
         private static int CountThree(int[] A)
         {
             int[] T = new int[A.Length];
