@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -16,7 +17,49 @@ namespace _3Chains
                 .Select(i => randNum.Next(Min, Max))
                 .ToArray();
 
-            var result = MergeSort(input);
+            //var result = MergeSort(input);
+            var result = BestWorst(input, 0);
+        }
+
+        private static int[] BestWorst(int[] input, int level)
+        {
+            List<int> badList = new List<int>();
+            List<int> goodList = new List<int>();
+
+            for (int i = 0; i < input.Length; i+=2)
+            {
+                Console.WriteLine($"I = {input[i]}, I+1={input[i + 1]}");
+                if (input[i] > input[i + 1])
+                {
+                    badList.Add(input[i + 1]);
+                    goodList.Add(input[i]);
+                }
+                else
+                {
+                    goodList.Add(input[i + 1]);
+                    badList.Add(input[i]);
+                }
+            }
+
+            if (goodList.Count + badList.Count == 2)
+            {
+                return badList.Concat(goodList).ToArray();
+            }
+            else
+            {
+                if (level == 0)
+                {
+                    return BestWorst(badList.Concat(goodList).ToArray(), level+1);
+                }
+                else
+                {
+                    var quarter = input.Length / 4;
+                    var firstQuarter = badList.Take(quarter);
+                    var lastQuarter = goodList.Skip(quarter);
+                    return BestWorst(firstQuarter.Concat(lastQuarter).ToArray(), level + 1);
+                }
+                
+            }
         }
 
         private static int[] MergeSort(int[] input)
